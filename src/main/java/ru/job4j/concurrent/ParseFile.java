@@ -31,5 +31,4 @@ public class ParseFile {
         return getContent(predicate);
     }
 
-
 }

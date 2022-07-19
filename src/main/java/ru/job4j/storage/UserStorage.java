@@ -1,19 +1,18 @@
-package ru.job4j.Storage;
+package ru.job4j.storage;
 
 import net.jcip.annotations.GuardedBy;
 import net.jcip.annotations.ThreadSafe;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @ThreadSafe
 public class UserStorage {
     @GuardedBy("this")
-    List<User> list = new ArrayList<>();
+    private List<User> list = new ArrayList<>();
 
-    synchronized boolean add (User user) {
-        if(!list.contains(user)) {
+    synchronized boolean add(User user) {
+        if (!list.contains(user)) {
             list.add(user);
             return true;
         }
@@ -21,7 +20,7 @@ public class UserStorage {
     }
 
     synchronized boolean update(User user) {
-        if(list.contains(user)) {
+        if (list.contains(user)) {
             list.set(list.indexOf(user), user);
             return true;
         }
@@ -29,7 +28,7 @@ public class UserStorage {
     }
 
     synchronized boolean delete(User user) {
-        if(list.contains(user)) {
+        if (list.contains(user)) {
             list.remove(user);
             return true;
         }
@@ -39,7 +38,7 @@ public class UserStorage {
     synchronized User findById(int idUser) {
         User user = null;
         for (User user1 : list) {
-            if(user1.getId() == idUser) {
+            if (user1.getId() == idUser) {
                 user = user1;
             }
         }
