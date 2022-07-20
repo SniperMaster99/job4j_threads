@@ -17,7 +17,6 @@ public class EmailNotification {
     }
 
     public void send(String subject, String body, String email) {
-
     }
 
     public void close() {
