@@ -4,13 +4,14 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 public class EmailNotification {
-    private ExecutorService executorService = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());
+    private final ExecutorService executorService = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());
 
     public void emailTo (User user) {
         executorService.submit(new Runnable() {
             @Override
             public void run() {
-                send(String.format(" Notification %s to email %s", user.getUsername(), user.getEmail()), String.format("Add a new event to %s", user.getUsername()), user.getEmail());
+                send(String.format(" Notification %s to email %s", user.getUsername(), user.getEmail()),
+                        String.format("Add a new event to %s", user.getUsername()), user.getEmail());
             }
         });
     }
@@ -21,5 +22,12 @@ public class EmailNotification {
 
     public void close() {
         executorService.shutdown();
+        while (!executorService.isTerminated()) {
+            try {
+                Thread.sleep(100);
+            } catch (InterruptedException e) {
+                Thread.currentThread().interrupt();
+            }
+        }
     }
 }
