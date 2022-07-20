@@ -13,10 +13,10 @@ public class SimpleBlockingQueueTest {
     @Test
     public void Producer() throws InterruptedException {
         final CopyOnWriteArrayList<Integer> list = new CopyOnWriteArrayList<>();
-        final SimpleBlockingQueue<Integer> queue = new SimpleBlockingQueue<>(5);
+        final SimpleBlockingQueue<Integer> queue = new SimpleBlockingQueue<>(10);
         Thread producer = new Thread(() -> {
             try {
-                for (int i = 0; i < 5; i++) {
+                for (int i = 0; i < 10; i++) {
                     queue.offer(i);
                 }
             } catch (InterruptedException e) {
@@ -38,6 +38,6 @@ public class SimpleBlockingQueueTest {
         producer.join();
         consumer.interrupt();
         consumer.join();
-        assertThat(list, is(Arrays.asList(0, 1, 2, 3, 4)));
+        assertThat(list, is(Arrays.asList(0, 1, 2, 3, 4, 5, 6, 7, 8, 9)));
     }
 }
