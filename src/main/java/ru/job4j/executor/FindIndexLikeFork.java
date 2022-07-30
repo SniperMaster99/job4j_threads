@@ -1,6 +1,5 @@
 package ru.job4j.executor;
 
-import java.util.Arrays;
 import java.util.concurrent.ForkJoinPool;
 import java.util.concurrent.RecursiveTask;
 
@@ -21,14 +20,16 @@ public class FindIndexLikeFork<T> extends RecursiveTask<Integer> {
     protected Integer compute() {
         Integer result = 0;
         if (to - from >= 10) {
-            FindIndexLikeFork arrayFirstHalf = new FindIndexLikeFork(array, index, from, to / 2);
-            FindIndexLikeFork arraySecondHalf = new FindIndexLikeFork(array, index, (to / 2) + 1, to);
+            FindIndexLikeFork arrayFirstHalf = new FindIndexLikeFork(array, index,
+                    from, to / 2);
+            FindIndexLikeFork arraySecondHalf = new FindIndexLikeFork(array, index,
+                    (to / 2) + 1, to);
             arrayFirstHalf.fork();
             arraySecondHalf.fork();
         }
         for (int indexCompute = 0; indexCompute < array.length; indexCompute++) {
-            if (array[indexCompute] == index){
-                return result = indexCompute;
+            if (indexCompute == index) {
+                result = (Integer) array[indexCompute];
             }
         }
         return result;
