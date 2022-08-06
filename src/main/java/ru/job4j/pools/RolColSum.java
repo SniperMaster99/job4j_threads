@@ -73,14 +73,8 @@ public class RolColSum {
 
     public static Sums[] asyncSum(int[][] matrix) throws ExecutionException, InterruptedException {
         Sums[] summary = new Sums[matrix.length];
-        List<CompletableFuture<Integer>> listRow = new ArrayList<>();
-        List<CompletableFuture<Integer>> listCol = new ArrayList<>();
-        for (int i = 0; i < matrix.length; i++) {
-            listRow.add(getSummaryRow(matrix, i));
-            listCol.add(getSummaryCol(matrix, i));
-        }
         for (int i = 0; i < summary.length; i++) {
-            summary[i] = new Sums(listRow.get(i).get(), listCol.get(i).get());
+            summary[i] = new Sums(getSummaryRow(matrix, i).get(), getSummaryCol(matrix, i).get());
         }
         return summary;
     }
