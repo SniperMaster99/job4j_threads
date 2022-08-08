@@ -12,4 +12,8 @@ public class Probably {
     public void saveNumber() {
 
     }
+
+    public void saveInfo() {
+        
+    }
 }
