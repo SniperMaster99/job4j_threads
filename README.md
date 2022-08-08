@@ -1,4 +1,4 @@
 # job4j_threads
-"Самый обычный проект собранный из тасков"
-Task 124176
+##"Such a common project with tasks from a mentor. The project is entirely dedicated to the topic of multithreading, asynchronous programming, and multithreaded collections."
+##Task 124176
 
