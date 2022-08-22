@@ -5,39 +5,33 @@ import net.jcip.annotations.ThreadSafe;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 @ThreadSafe
 public class UserStorage {
     @GuardedBy("this")
-    private List<User> list = new ArrayList<>();
+    private Map<Integer, User> list = new ConcurrentHashMap<>();
 
-    synchronized boolean add(User user) {
-        if (!list.contains(user)) {
-            list.add(user);
-            return true;
-        }
-        return false;
+    synchronized void add(User user) {
+        list.putIfAbsent(user.getId(), user);
     }
 
-    synchronized boolean update(User user) {
-        if (list.contains(user)) {
-            list.set(list.indexOf(user), user);
-            return true;
+    synchronized void update(User user) {
+        if (list.containsValue(user)) {
+            list.put(user.getId(), user);
         }
-        return false;
     }
 
-    synchronized boolean delete(User user) {
-        if (list.contains(user)) {
-            list.remove(user);
-            return true;
+    synchronized void delete(User user) {
+        if (list.containsValue(user)) {
+            list.remove(user.getId(), user);
         }
-        return false;
     }
 
     synchronized User findById(int idUser) {
         User user = null;
-        for (User user1 : list) {
+        for (User user1 : list.values()) {
             if (user1.getId() == idUser) {
                 user = user1;
             }
@@ -45,9 +39,9 @@ public class UserStorage {
         return user;
     }
 
-    synchronized boolean transfer(int fromID, int told, int amount) {
+    synchronized boolean transfer(int fromID, int toId, int amount) {
         User user1 = findById(fromID);
-        User user2 = findById(told);
+        User user2 = findById(toId);
         user1.setAmount(user1.getAmount() - amount);
         user2.setAmount(user2.getAmount() + amount);
         return true;
