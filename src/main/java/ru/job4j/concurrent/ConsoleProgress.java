@@ -11,9 +11,12 @@ public class ConsoleProgress implements Runnable {
     @Override
     public void run() {
         while (!Thread.currentThread().isInterrupted()) {
-            System.out.print("\r load: ");
+            String[] chars = {"\\", "|", "/"};
             try {
-                Thread.sleep(500);
+                for (String aChar : chars) {
+                    System.out.print("\r load: " + aChar);
+                    Thread.sleep(500);
+                }
             } catch (InterruptedException e) {
                 Thread.currentThread().interrupt();
             }
