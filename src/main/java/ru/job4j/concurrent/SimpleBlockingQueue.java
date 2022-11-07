@@ -17,17 +17,17 @@ public class SimpleBlockingQueue<T> {
     }
 
     public synchronized void offer(T value) throws InterruptedException {
-        queue.add(value);
+        queue.offer(value);
         notifyAll();
     }
 
     public synchronized T poll() throws InterruptedException {
-        queue.remove();
+        T result = queue.poll();
         notifyAll();
-        return queue.remove();
+        return result;
     }
 
     public boolean isEmpty() {
-        return true;
+        return queue.poll() == null;
     }
 }
