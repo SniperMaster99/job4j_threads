@@ -1,9 +1,9 @@
 package ru.job4j.threadlocal;
 
-public class SecondThread extends Thread{
+public class SecondThread extends Thread {
     @Override
     public void run() {
-        ThreadLocalDemo.t1.set("Thread 2");
-        System.out.println(ThreadLocalDemo.t1.get());
+        ThreadLocalDemo.getT1().set("Thread 2");
+        System.out.println(ThreadLocalDemo.getT1().get());
     }
 }
