@@ -10,6 +10,10 @@ public class ThreadPool {
 
     public ThreadPool() {
         size = Runtime.getRuntime().availableProcessors();
+        for (int i = 0; i < size; i++) {
+            threads.add(new Thread());
+            threads.get(i).start();
+        }
     }
 
     public void work(Runnable job) throws InterruptedException {
