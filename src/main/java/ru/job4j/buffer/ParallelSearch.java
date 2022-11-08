@@ -6,11 +6,9 @@ public class ParallelSearch {
     public static void main(String[] args) throws InterruptedException {
         SimpleBlockingQueue<Integer> queue = new SimpleBlockingQueue<>(4);
         final Thread consumer = new Thread(() -> {
-            while (!Thread.currentThread().isInterrupted()) {
+            while (!Thread.currentThread().isInterrupted() && !queue.isEmpty()) {
                 try {
-                    if (!queue.isEmpty()) {
-                        System.out.println(queue.poll());
-                    }
+                    System.out.println(queue.poll());
                 } catch (InterruptedException e) {
                     Thread.currentThread().interrupt();
                 }

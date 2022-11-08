@@ -17,11 +17,17 @@ public class SimpleBlockingQueue<T> {
     }
 
     public synchronized void offer(T value) throws InterruptedException {
-        queue.offer(value);
+        while (queue.size() == 0) {
+            wait();
+        }
+        queue.add(value);
         notifyAll();
     }
 
     public synchronized T poll() throws InterruptedException {
+        while (queue.size() == 0) {
+            wait();
+        }
         T result = queue.poll();
         notifyAll();
         return result;
