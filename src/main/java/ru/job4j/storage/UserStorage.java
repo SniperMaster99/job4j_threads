@@ -16,7 +16,7 @@ public class UserStorage {
     }
 
     synchronized boolean update(User user) {
-        return list.replace(user.getId(), user) == null;
+        return list.replace(user.getId(), user) != null;
     }
 
     synchronized boolean delete(User user) {
@@ -24,10 +24,12 @@ public class UserStorage {
     }
 
     synchronized boolean transfer(int fromID, int toId, int amount) {
-        if (list.get(fromID) != null && list.get(toId) != null) {
-            if (list.get(fromID).getAmount() >= amount) {
-                list.get(fromID).setAmount(list.get(fromID).getAmount() - amount);
-                list.get(toId).setAmount(list.get(toId).getAmount() + amount);
+        User fromUser = list.get(fromID);
+        User toUser = list.get(toId);
+        if (fromUser != null && toUser != null) {
+            if (fromUser.getAmount() >= amount) {
+                fromUser.setAmount(fromUser.getAmount() - amount);
+                toUser.setAmount(toUser.getAmount() + amount);
                 return true;
             }
         }
