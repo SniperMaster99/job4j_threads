@@ -18,7 +18,7 @@ public class CASCount {
     }
 
     public int get() {
-        if(count.get() != null) {
+        if (count.get() != null) {
             return count.get();
         }
         return 0;
