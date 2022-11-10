@@ -20,12 +20,12 @@ public class SimpleBlockingQueue<T> {
         while (queue.size() == limit) {
             wait();
         }
-        queue.add(value);
+        queue.offer(value);
         notifyAll();
     }
 
     public synchronized T poll() throws InterruptedException {
-        while (queue.size() == 0) {
+        while (queue.isEmpty()) {
             wait();
         }
         T result = queue.poll();
@@ -33,7 +33,7 @@ public class SimpleBlockingQueue<T> {
         return result;
     }
 
-    public boolean isEmpty() {
-        return queue.poll() == null;
+    public synchronized boolean isEmpty() {
+        return queue.isEmpty();
     }
 }
