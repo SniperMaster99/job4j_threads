@@ -2,14 +2,15 @@ package ru.job4j.cache;
 
 import net.jcip.annotations.ThreadSafe;
 
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicReference;
 
 @ThreadSafe
 public class CASCount {
-    private final AtomicReference<Integer> count = new AtomicReference<>();
+    private final AtomicInteger count = new AtomicInteger();
+    private int number = 1;
 
     public void increment() {
-        int number;
         int next;
         do {
             number = get();
@@ -18,9 +19,6 @@ public class CASCount {
     }
 
     public int get() {
-        if (count.get() != null) {
-            return count.get();
-        }
-        return 0;
+        return count.get();
     }
 }
